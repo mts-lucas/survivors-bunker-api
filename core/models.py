@@ -20,6 +20,7 @@ class Profile(models.Model):
 
 class Survivor(models.Model):
     author = models.OneToOneField(Profile, on_delete=models.CASCADE)
+    author_comment = models.TextField(blank=True, null=True)
     cover = models.ImageField(upload_to='photos/survivors/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -44,6 +45,7 @@ class Survivor(models.Model):
 
 class Monster(models.Model):
     author = models.OneToOneField(Profile, on_delete=models.CASCADE)
+    author_comment = models.TextField(blank=True, null=True)
     cover = models.ImageField(upload_to='photos/survivors/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
