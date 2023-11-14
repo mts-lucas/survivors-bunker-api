@@ -33,7 +33,8 @@ class ProfileSerializer(serializers.ModelSerializer):
         fields = ['user', 'avatar', 'created_at', 'updated_at', 'nickname']
         extra_kwargs = {
             "created_at": {"ready_only": True},
-            "updated_at": {"ready_only": True}
+            "updated_at": {"ready_only": True},
+            "user": {"ready_only": True}
         }
 
 
@@ -54,6 +55,11 @@ class SurvivorSerializer(serializers.ModelSerializer):
             'conviction',
             'conditions',
         ]
+        extra_kwargs = {
+            "created_at": {"ready_only": True},
+            "updated_at": {"ready_only": True},
+            "author": {"ready_only": True}
+        }
 
 class MonsterSerializer(serializers.ModelSerializer):
     author = ProfileSerializer
@@ -70,3 +76,8 @@ class MonsterSerializer(serializers.ModelSerializer):
             'remaining_torments',
             'conditions',
         ]
+        extra_kwargs = {
+            "created_at": {"ready_only": True},
+            "updated_at": {"ready_only": True},
+            "author": {"ready_only": True}
+        }
