@@ -4,15 +4,6 @@ from rest_framework import serializers
 from core.models import *
 
 
-class ProfileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Profile
-        fields = ['user', 'avatar', 'created_at', 'updated_at', 'nickname']
-        extra_kwargs = {
-            "created_at": {"ready_only": True},
-            "updated_at": {"ready_only": True}
-        }
-
 class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True)
 
@@ -33,9 +24,21 @@ class UserSerializer(serializers.ModelSerializer):
             "email": {"required": True},
             "password": {"write_only": True},
         }
+        
+
+class ProfileSerializer(serializers.ModelSerializer):
+    user = UserSerializer
+    class Meta:
+        model = Profile
+        fields = ['user', 'avatar', 'created_at', 'updated_at', 'nickname']
+        extra_kwargs = {
+            "created_at": {"ready_only": True},
+            "updated_at": {"ready_only": True}
+        }
 
 
 class SurvivorSerializer(serializers.ModelSerializer):
+    author = ProfileSerializer
     class Meta:
         model = Survivor
         fields = [
@@ -53,6 +56,7 @@ class SurvivorSerializer(serializers.ModelSerializer):
         ]
 
 class MonsterSerializer(serializers.ModelSerializer):
+    author = ProfileSerializer
     class Meta:
         model = Monster
         fields = [
