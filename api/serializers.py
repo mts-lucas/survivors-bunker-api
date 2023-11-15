@@ -23,6 +23,7 @@ class UserSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             "email": {"required": True},
             "password": {"write_only": True},
+            "is_staff": {"read_only": True},
         }
         
 
@@ -32,9 +33,9 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = ['user', 'avatar', 'created_at', 'updated_at', 'nickname']
         extra_kwargs = {
-            "created_at": {"ready_only": True},
-            "updated_at": {"ready_only": True},
-            "user": {"ready_only": True}
+            "created_at": {"read_only": True},
+            "updated_at": {"read_only": True},
+            "user": {"read_only": True}
         }
 
 
@@ -56,9 +57,9 @@ class SurvivorSerializer(serializers.ModelSerializer):
             'conditions',
         ]
         extra_kwargs = {
-            "created_at": {"ready_only": True},
-            "updated_at": {"ready_only": True},
-            "author": {"ready_only": True}
+            "created_at": {"read_only": True},
+            "updated_at": {"read_only": True},
+            "author": {"read_only": True}
         }
 
 class MonsterSerializer(serializers.ModelSerializer):
@@ -77,7 +78,7 @@ class MonsterSerializer(serializers.ModelSerializer):
             'conditions',
         ]
         extra_kwargs = {
-            "created_at": {"ready_only": True},
-            "updated_at": {"ready_only": True},
-            "author": {"ready_only": True}
+            "created_at": {"read_only": True},
+            "updated_at": {"read_only": True},
+            "author": {"read_only": True}
         }
