@@ -25,7 +25,6 @@ urlpatterns = [
     path('bunker/', RedirectView.as_view(url='api/v1/')),
     path('bunker/api/', RedirectView.as_view(url='v1/')),
     path('', RedirectView.as_view(url='bunker/api/v1/')),
-
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

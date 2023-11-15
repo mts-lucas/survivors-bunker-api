@@ -82,3 +82,8 @@ class MonsterSerializer(serializers.ModelSerializer):
             "updated_at": {"read_only": True},
             "author": {"read_only": True}
         }
+
+
+class SearchResultsSerializer(serializers.Serializer):
+    monsters = serializers.ListField(child=MonsterSerializer(), default=[])
+    survivors = serializers.ListField(child=SurvivorSerializer(), default=[])
