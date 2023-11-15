@@ -159,6 +159,7 @@ class UserDetail(APIView):
 
 
 
+
 class SearchView(APIView):
     pagination_class = PageNumberPagination
 
@@ -190,7 +191,11 @@ class SearchView(APIView):
 
         # Use o SearchResultsSerializer para serializar o dicionário
         results_serializer = SearchResultsSerializer(results_dict)
-        return Response(results_serializer.data)
+
+        # Paginação
+        result_page = self.pagination_class.paginate_queryset(results_serializer.data, request)
+        return self.pagination_class.get_paginated_response(result_page)
+
 
 
 
