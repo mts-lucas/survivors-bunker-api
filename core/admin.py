@@ -5,3 +5,5 @@ from .models import *
 admin.site.register(Profile)
 admin.site.register(Monster)
 admin.site.register(Survivor)
+
+# testing
