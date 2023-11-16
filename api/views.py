@@ -18,6 +18,7 @@ class MonsterViewList(APIView):
 
         
     def get(self, request, format=None):
+        i_param = request.query_params.get('i', None)
         search_param = request.query_params.get('s', None)
         monsters = Monster.objects.all()
 
@@ -25,6 +26,9 @@ class MonsterViewList(APIView):
             monsters = monsters.filter(
                 Q(characteristics__icontains=search_param) | Q(torments__icontains=search_param)
             )
+
+        if i_param:
+            monsters = monsters.filter(author__id=i_param)
         paginator = self.pagination_class()
         result_page = paginator.paginate_queryset(monsters, request)
         serializer = MonsterSerializer(result_page, many=True)
@@ -73,13 +77,17 @@ class SurvivorViewList(APIView):
 
     def get(self, request, format=None):
         search_param = request.query_params.get('s', None)
+        i_param = request.query_params.get('i', None)
         survivors = Survivor.objects.all()
 
         if search_param:
             survivors = survivors.filter(
                 Q(characteristics__icontains=search_param) | Q(torments__icontains=search_param)
             )
-        
+
+        if i_param:
+            survivors = survivors.filter(author__id=i_param)
+
         paginator = self.pagination_class()
         result_page = paginator.paginate_queryset(survivors, request)
         serializer = SurvivorSerializer(result_page, many=True)
