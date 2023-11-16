@@ -5,7 +5,7 @@ from django.db import models
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(upload_to='photos/profiles/', blank=True, null=True)
+    avatar = models.ImageField(upload_to='profiles/%Y/%m/%d/', blank=True, null=True, default='')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     nickname = models.CharField(max_length=32)
@@ -22,7 +22,7 @@ class Profile(models.Model):
 class Survivor(models.Model):
     author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='survivors')
     author_comment = models.TextField(blank=True, null=True)
-    cover = models.ImageField(upload_to='photos/survivors/', blank=True, null=True)
+    cover = models.ImageField(upload_to='survivors/%Y/%m/%d/', blank=True, null=True, default='')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     name = models.CharField(max_length=64)
@@ -48,7 +48,7 @@ class Survivor(models.Model):
 class Monster(models.Model):
     author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='monsters')
     author_comment = models.TextField(blank=True, null=True)
-    cover = models.ImageField(upload_to='photos/survivors/', blank=True, null=True)
+    cover = models.ImageField(upload_to='monsters/%Y/%m/%d/', blank=True, null=True, default='')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     name = models.CharField(max_length=64)
