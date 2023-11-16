@@ -28,7 +28,7 @@ class UserSerializer(serializers.ModelSerializer):
         
 
 class ProfileSerializer(serializers.ModelSerializer):
-    user = UserSerializer
+    user = UserSerializer()
     class Meta:
         model = Profile
         fields = ['user', 'avatar', 'created_at', 'updated_at', 'nickname']
@@ -40,7 +40,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 
 class SurvivorSerializer(serializers.ModelSerializer):
-    author = ProfileSerializer
+    author = ProfileSerializer()
     class Meta:
         model = Survivor
         fields = [
@@ -63,7 +63,7 @@ class SurvivorSerializer(serializers.ModelSerializer):
         }
 
 class MonsterSerializer(serializers.ModelSerializer):
-    author = ProfileSerializer
+    author = ProfileSerializer()
     class Meta:
         model = Monster
         fields = [
@@ -84,6 +84,6 @@ class MonsterSerializer(serializers.ModelSerializer):
         }
 
 
-class SearchResultsSerializer(serializers.Serializer):
-    monsters = serializers.ListField(child=MonsterSerializer(), default=[])
-    survivors = serializers.ListField(child=SurvivorSerializer(), default=[])
+# class SearchResultsSerializer(serializers.Serializer):
+#     monsters = serializers.ListField(child=MonsterSerializer(), default=[])
+#     survivors = serializers.ListField(child=SurvivorSerializer(), default=[])

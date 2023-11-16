@@ -160,41 +160,46 @@ class UserDetail(APIView):
 
 
 
-class SearchView(APIView):
-    pagination_class = PageNumberPagination
+# class SearchView(APIView):
+#     pagination_class = PageNumberPagination
 
-    def get(self, request, format=None):
-        search_param = request.query_params.get('s', None)
+#     def get(self, request, format=None):
+#         search_param = request.query_params.get('s', None)
 
-        # Inicialize as queries para ambas as tabelas
-        monsters = Monster.objects.all()
-        survivors = Survivor.objects.all()
+#         # Inicialize as queries para ambas as tabelas
+#         monsters = Monster.objects.all()
+#         survivors = Survivor.objects.all()
 
-        # Se o parâmetro 's' estiver presente, faça a pesquisa nos campos relevantes
-        if search_param:
-            monsters = monsters.filter(
-                Q(characteristics__icontains=search_param) | Q(torments__icontains=search_param)
-            )
-            survivors = survivors.filter(
-                Q(characteristics__icontains=search_param) | Q(torments__icontains=search_param)
-            )
+#         # Se o parâmetro 's' estiver presente, faça a pesquisa nos campos relevantes
+#         if search_param:
+#             monsters = monsters.filter(
+#                 Q(characteristics__icontains=search_param) | Q(torments__icontains=search_param)
+#             )
+#             survivors = survivors.filter(
+#                 Q(characteristics__icontains=search_param) | Q(torments__icontains=search_param)
+#             )
 
-        # Serialize os resultados para ambos os modelos
-        monster_serializer = MonsterSerializer(monsters, many=True)
-        survivor_serializer = SurvivorSerializer(survivors, many=True)
+#         # Serialize os resultados para ambos os modelos
+#         monster_serializer = MonsterSerializer(monsters, many=True)
+#         survivor_serializer = SurvivorSerializer(survivors, many=True)
 
-        # Construa o dicionário de resultados
-        results_dict = {
-            'monsters': monster_serializer.data,
-            'survivors': survivor_serializer.data
-        }
+#         # Construa o dicionário de resultados
+#         # Construa o dicionário de resultados
+#         results_dict = {
+#             'monsters': monster_serializer.data,
+#             'survivors': survivor_serializer.data
+#         }
 
-        # Use o SearchResultsSerializer para serializar o dicionário
-        results_serializer = SearchResultsSerializer(results_dict)
+#         # Use o SearchResultsSerializer para serializar o dicionário
+#         results_serializer = SearchResultsSerializer(results_dict)
 
-        # Paginação
-        result_page = self.pagination_class.paginate_queryset(results_serializer.data, request)
-        return self.pagination_class.get_paginated_response(result_page)
+#         # Paginação
+#         paginated_results = {
+#             'monsters': self.pagination_class.paginate_queryset(results_dict['monsters'], request),
+#             'survivors': self.pagination_class.paginate_queryset(results_dict['survivors'], request),
+#         }
+
+#         return self.pagination_class.get_paginated_response(paginated_results)
 
 
 
@@ -208,7 +213,7 @@ class ApiRootView(APIView):
             'monster-detail': reverse('monster-detail', request=request, args=[1], format=format),
             'user-list': reverse('user-list', request=request, format=format),
             'user-detail': reverse('user-detail', request=request, args=[1], format=format),
-            'search': reverse('search', request=request, format=format),
+            # 'search': reverse('search', request=request, format=format),
         }
         return Response(data)
     

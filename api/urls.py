@@ -11,7 +11,7 @@ urlpatterns = [
     path('monsters/<int:pk>/', MonsterDetail.as_view(), name='monster-detail'),
     path('users/', UserViewList.as_view(), name='user-list'),
     path('users/<int:pk>/', UserDetail.as_view(), name='user-detail'),
-    path('search/', SearchView.as_view(), name='search'),
+    # path('search/', SearchView.as_view(), name='search'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
