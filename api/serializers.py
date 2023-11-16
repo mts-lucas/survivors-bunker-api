@@ -31,7 +31,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     class Meta:
         model = Profile
-        fields = ['user', 'avatar', 'created_at', 'updated_at', 'nickname']
+        fields = ['id', 'user', 'avatar', 'created_at', 'updated_at', 'nickname']
         extra_kwargs = {
             "created_at": {"read_only": True},
             "updated_at": {"read_only": True},
@@ -44,6 +44,7 @@ class SurvivorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Survivor
         fields = [
+            'id',
             'author',
             'author_comment',
             'cover',
@@ -67,6 +68,7 @@ class MonsterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Monster
         fields = [
+            'id',
             'author',
             'author_comment',
             'cover',

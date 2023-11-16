@@ -28,7 +28,7 @@ class MonsterViewList(APIView):
         paginator = self.pagination_class()
         result_page = paginator.paginate_queryset(monsters, request)
         serializer = MonsterSerializer(result_page, many=True)
-        return Response(serializer.data)
+        return paginator.get_paginated_response(serializer.data)
     
     def post(self, request, format=None):
         serializer = MonsterSerializer(data=request.data)
@@ -83,7 +83,7 @@ class SurvivorViewList(APIView):
         paginator = self.pagination_class()
         result_page = paginator.paginate_queryset(survivors, request)
         serializer = SurvivorSerializer(result_page, many=True)
-        return Response(serializer.data)
+        return paginator.get_paginated_response(serializer.data)
 
     def post(self, request, format=None):
         serializer = SurvivorSerializer(data=request.data)
@@ -133,7 +133,7 @@ class UserViewList(APIView):
         paginator = self.pagination_class()
         result_page = paginator.paginate_queryset(players, request)
         serializer = ProfileSerializer(result_page, many=True)
-        return Response(serializer.data)
+        return paginator.get_paginated_response(serializer.data)
 
 
 class UserDetail(APIView):
