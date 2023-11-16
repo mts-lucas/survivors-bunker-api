@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class Profile(models.Model):
@@ -11,7 +11,7 @@ class Profile(models.Model):
     nickname = models.CharField(max_length=32)
 
     def __str__(self):
-        return f'{nickname}'
+        return f'{self.nickname}'
 
     class Meta:
         verbose_name = 'Profile'
@@ -19,7 +19,7 @@ class Profile(models.Model):
 
 
 class Survivor(models.Model):
-    author = models.OneToOneField(Profile, on_delete=models.CASCADE)
+    author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='survivors')
     author_comment = models.TextField(blank=True, null=True)
     cover = models.ImageField(upload_to='photos/survivors/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -37,14 +37,14 @@ class Survivor(models.Model):
     conditions = models.TextField()
 
     def __str__(self) -> str:
-        return f'survivor {name}'
+        return f'survivor {self.name}'
     
     class Meta:
         verbose_name = 'Survivor'
         verbose_name_plural = 'Survivors'
 
 class Monster(models.Model):
-    author = models.OneToOneField(Profile, on_delete=models.CASCADE)
+    author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='monsters')
     author_comment = models.TextField(blank=True, null=True)
     cover = models.ImageField(upload_to='photos/survivors/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -55,7 +55,7 @@ class Monster(models.Model):
     conditions = models.TextField()
 
     def __str__(self) -> str:
-        return f'monster {name}'
+        return f'monster {self.name}'
     
     class Meta:
         verbose_name = 'Monster'
