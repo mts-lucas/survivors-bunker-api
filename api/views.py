@@ -1,11 +1,13 @@
+from django.contrib.auth.models import User
 from django.db.models import Q
 from django.http import Http404
-from rest_framework import status
+from rest_framework import generics, status
 from rest_framework.pagination import PageNumberPagination
 # from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework.views import APIView
+from rest_framework.permissions import AllowAny
 
 from core.models import *
 
@@ -166,6 +168,10 @@ class UserDetail(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class RegisterView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    permission_classes = (AllowAny,)
+    serializer_class = RegisterSerializer
 
 
 # class SearchView(APIView):
