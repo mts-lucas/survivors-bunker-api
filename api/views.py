@@ -40,6 +40,7 @@ class MonsterViewList(APIView):
     
     def post(self, request, format=None):
         
+        request.data['author'] = request.user.profile.id
         serializer = MonsterSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -103,6 +104,7 @@ class SurvivorViewList(APIView):
         return paginator.get_paginated_response(serializer.data)
 
     def post(self, request, format=None):
+        request.data['author'] = request.user.profile.id
         serializer = SurvivorSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()

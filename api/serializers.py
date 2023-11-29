@@ -62,7 +62,7 @@ class SurvivorSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             "created_at": {"read_only": True},
             "updated_at": {"read_only": True},
-            "author": {"read_only": True}
+            "author": {"required": False}
         }
 
 class MonsterSerializer(serializers.ModelSerializer):
@@ -84,7 +84,7 @@ class MonsterSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             "created_at": {"read_only": True},
             "updated_at": {"read_only": True},
-            "author": {"read_only": True}
+            "author": {"required": False}
         }
 
 

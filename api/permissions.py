@@ -10,6 +10,10 @@ class IsAuthorOrReadOnly(permissions.BasePermission):
 
         if request.method in ["GET", "HEAD", "OPTIONS"]:
             return True
+        
+        if request.user.is_staff:
+            return True
+        
         return obj.author.user == request.user
     
 class IsMyProfileOrReadOnly(permissions.BasePermission):
