@@ -3,11 +3,12 @@ from django.db.models import Q
 from django.http import Http404
 from rest_framework import generics, status
 from rest_framework.pagination import PageNumberPagination
-# from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from .permissions import ReadOnly, IsAuthorOrReadOnly, IsMyProfileOrReadOnly
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from core.models import *
 
@@ -17,6 +18,7 @@ from .serializers import *
 class MonsterViewList(APIView):
 
     pagination_class = PageNumberPagination
+    permission_classes = [IsAuthenticated | ReadOnly]
 
         
     def get(self, request, format=None):
@@ -37,6 +39,7 @@ class MonsterViewList(APIView):
         return paginator.get_paginated_response(serializer.data)
     
     def post(self, request, format=None):
+        
         serializer = MonsterSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -46,6 +49,8 @@ class MonsterViewList(APIView):
     
 
 class MonsterDetail(APIView):
+
+    permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
 
     def get_object(self, pk):
         try:
@@ -75,6 +80,8 @@ class MonsterDetail(APIView):
 
 
 class SurvivorViewList(APIView):
+
+    permission_classes = [IsAuthenticated | ReadOnly]
     pagination_class = PageNumberPagination
 
     def get(self, request, format=None):
@@ -105,6 +112,8 @@ class SurvivorViewList(APIView):
 
 class SurvivorDetail(APIView):
 
+    permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
+
     def get_object(self, pk):
         try:
             return Survivor.objects.get(pk=pk)
@@ -131,6 +140,8 @@ class SurvivorDetail(APIView):
     
 
 class UserViewList(APIView):
+
+    permission_classes = [ReadOnly,]
     pagination_class = PageNumberPagination
 
     def get(self, request, format=None):
@@ -147,6 +158,8 @@ class UserViewList(APIView):
 
 
 class UserDetail(APIView):
+
+    permission_classes = [IsAuthenticated, IsMyProfileOrReadOnly]
 
     def get_object(self, pk):
         try:
@@ -173,7 +186,19 @@ class RegisterView(generics.CreateAPIView):
     permission_classes = (AllowAny,)
     serializer_class = RegisterSerializer
 
+class LogoutView(APIView):
+    permission_classes = (IsAuthenticated,)
 
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh_token"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+
+            return Response(status=status.HTTP_205_RESET_CONTENT)
+        except Exception as e:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        
 # class SearchView(APIView):
 #     pagination_class = PageNumberPagination
 
