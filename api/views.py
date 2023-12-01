@@ -51,7 +51,7 @@ class MonsterViewList(APIView):
 
 class MonsterDetail(APIView):
 
-    permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
+    permission_classes = [IsAuthorOrReadOnly,]
 
     def get_object(self, pk):
         try:
@@ -114,7 +114,7 @@ class SurvivorViewList(APIView):
 
 class SurvivorDetail(APIView):
 
-    permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
+    permission_classes = [IsAuthorOrReadOnly,]
 
     def get_object(self, pk):
         try:
@@ -161,7 +161,7 @@ class UserViewList(APIView):
 
 class UserDetail(APIView):
 
-    permission_classes = [IsAuthenticated, IsMyProfileOrReadOnly]
+    permission_classes = [IsMyProfileOrReadOnly]
 
     def get_object(self, pk):
         try:
