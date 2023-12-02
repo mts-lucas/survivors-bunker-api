@@ -14,7 +14,7 @@ class Profile(models.Model):
         return f'{self.nickname}'
 
     class Meta:
-        ordering = ['id']
+        ordering = ['-created_at']
         verbose_name = 'Profile'
         verbose_name_plural = 'Profiles'
 
@@ -41,7 +41,7 @@ class Survivor(models.Model):
         return f'survivor {self.name}'
     
     class Meta:
-        ordering = ['id']
+        ordering = ['-created_at']
         verbose_name = 'Survivor'
         verbose_name_plural = 'Survivors'
 
@@ -60,6 +60,6 @@ class Monster(models.Model):
         return f'monster {self.name}'
     
     class Meta:
-        ordering = ['id']
+        ordering = ['-created_at']
         verbose_name = 'Monster'
         verbose_name_plural = 'Monsters'
