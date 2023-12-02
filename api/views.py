@@ -34,7 +34,7 @@ class MonsterViewList(APIView):
         if i_param:
             monsters = monsters.filter(author__id=i_param)
         
-        monsters.order_by('-id')
+        monsters.order_by('-created_at')
         paginator = self.pagination_class()
         result_page = paginator.paginate_queryset(monsters, request)
         serializer = MonsterSerializer(result_page, many=True)
@@ -100,7 +100,7 @@ class SurvivorViewList(APIView):
         if i_param:
             survivors = survivors.filter(author__id=i_param)
 
-        survivors.order_by('-id')
+        survivors.order_by('-created_at')
         paginator = self.pagination_class()
         result_page = paginator.paginate_queryset(survivors, request)
         serializer = SurvivorSerializer(result_page, many=True)
@@ -156,7 +156,7 @@ class UserViewList(APIView):
         if search_param:
             players = players.filter(nickname__icontains=search_param)
         
-        players.order_by('-id')
+        players.order_by('-created_at')
         paginator = self.pagination_class()
         result_page = paginator.paginate_queryset(players, request)
         serializer = ProfileSerializer(result_page, many=True)
