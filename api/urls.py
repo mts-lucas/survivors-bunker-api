@@ -13,6 +13,7 @@ urlpatterns = [
     path('monsters/<int:pk>/', MonsterDetail.as_view(), name='monster-detail'),
     path('users/', UserViewList.as_view(), name='user-list'),
     path('users/<int:pk>/', UserDetail.as_view(), name='user-detail'),
+    path('whoiam/', WhoIAmView.as_view(), name='who-i-am'),
     # path('search/', SearchView.as_view(), name='search'),
 ]
 
