@@ -244,6 +244,23 @@ class LogoutView(APIView):
 #         return self.pagination_class.get_paginated_response(paginated_results)
 
 
+class WhoIAmView(APIView):
+
+    permission_classes = (IsAuthenticated,)
+
+    def get_object(self, pk):
+        try:
+            return Profile.objects.get(pk=pk)
+        except Profile.DoesNotExist:
+            raise Http404
+
+    def get(self, request, format=None):
+        iam = self.get_object(request.user.profile.id)
+        serializer = ProfileSerializer(iam)
+        return Response(serializer.data)
+
+        
+
 
 
 class ApiRootView(APIView):
