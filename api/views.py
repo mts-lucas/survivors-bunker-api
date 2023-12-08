@@ -28,7 +28,7 @@ class MonsterViewList(APIView):
 
         if search_param:
             monsters = monsters.filter(
-                Q(characteristics__icontains=search_param) | Q(torments__icontains=search_param)
+                Q(characteristics__icontains=search_param) | Q(remaining_torments__icontains=search_param) | Q(name__icontains=search_param) | Q(conditions__icontains=search_param)
             )
 
         if i_param:
@@ -93,7 +93,7 @@ class SurvivorViewList(APIView):
 
         if search_param:
             survivors = survivors.filter(
-                Q(characteristics__icontains=search_param) | Q(torments__icontains=search_param)
+                Q(characteristics__icontains=search_param) | Q(torments__icontains=search_param) | Q(name__icontains=search_param) | Q(conditions__icontains=search_param) | Q(codename__icontains=search_param)
             )
 
         if i_param:
