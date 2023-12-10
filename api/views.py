@@ -40,10 +40,13 @@ class MonsterViewList(APIView):
         return paginator.get_paginated_response(serializer.data)
     
     def post(self, request, format=None):
+     
+        data = request.data.copy()
+        data['author'] = request.user.profile.id
         
-        serializer = MonsterSerializer(data=request.data)
+        serializer = MonsterPostSerializer(data=data)
         if serializer.is_valid():
-            serializer.save(author=request.user.profile)
+            serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
@@ -104,9 +107,13 @@ class SurvivorViewList(APIView):
         return paginator.get_paginated_response(serializer.data)
 
     def post(self, request, format=None):
-        serializer = SurvivorSerializer(data=request.data)
+
+        data = request.data.copy()
+        data['author'] = request.user.profile.id
+
+        serializer = SurvivorPostSerializer(data=data)
         if serializer.is_valid():
-            serializer.save(author=request.user.profile)
+            serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
