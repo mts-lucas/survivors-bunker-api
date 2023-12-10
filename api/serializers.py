@@ -67,6 +67,29 @@ class SurvivorSerializer(serializers.ModelSerializer):
             "codename": {"required": False},
         }
 
+class SurvivorPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Survivor
+        fields = [
+            'id',
+            'author',
+            'author_comment',
+            'cover',
+            'name',
+            'codename',
+            'characteristics',
+            'torments',
+            'conviction',
+            'conditions',
+        ]
+        extra_kwargs = {
+
+            "author": {"required": False},
+            "cover": {"required": False},
+            "codename": {"required": False},
+            "author_comment": {"required": False},
+        }
+
 class MonsterSerializer(serializers.ModelSerializer):
     author = ProfileSerializer()
     class Meta:
@@ -89,6 +112,26 @@ class MonsterSerializer(serializers.ModelSerializer):
             "author": {"required": False},
             "cover": {"required": False},
             "remaining_torments": {"required": False},
+        }
+
+class MonsterPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Monster
+        fields = [
+            'id',
+            'author',
+            'author_comment',
+            'cover',
+            'name',
+            'characteristics',
+            'remaining_torments',
+            'conditions',
+        ]
+        extra_kwargs = {
+            "author": {"required": False},
+            "cover": {"required": False},
+            "remaining_torments": {"required": False},
+            "author_comment": {"required": False},
         }
 
 
