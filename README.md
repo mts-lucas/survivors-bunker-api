@@ -20,6 +20,13 @@
 <li>Instale as dependências do projeto:</li>
 <pre>pip install -r requirements.txt</pre>
 
+<li>Gere sua SECRET_KEY a partir do seguinte comando no terminal:</li>
+<pre>python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())'
+</pre>
+
+<li>Crie um arquivo .env na raiz do diretório do projeto, copie o conteudo de .env.example e adicione sua SECRET_KEY:</li>
+<pre>SECRET_KEY='your-secret-key-here'</pre>
+
 <li>Faça as migrações do banco de dados:</li>
 <pre>python manage.py migrate</pre>
 
